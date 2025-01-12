@@ -45,6 +45,13 @@ server.use('/users',usersRouter);
 server.use('/categories',categoriesRouter);
 server.use('/statuses',statusesRouter);
 
+// Serve static files from the frontend build folder
+server.use(express.static(join(__dirname, '../client/build')));
+
+// Handle unmatched routes (send React's index.html)
+server.get('*', (req, res) => {
+    res.sendFile(join(__dirname, '../client/build', 'index.html'));
+});
 
 server.listen(8080, (err) => {
     if (err) console.error(err);
